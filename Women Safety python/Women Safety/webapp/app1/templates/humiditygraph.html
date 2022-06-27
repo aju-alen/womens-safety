@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather Monitoring System</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
+    <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <link href="{% static 'css/templatemo-diagoona.css' %}" rel="stylesheet" />
+    <script src="{% static  'jquery-2.1.4.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script>
+        window.onload = function () {
+            
+            var xValues=[];
+            var yValues=[];
+            $.ajax({url:"/gethum/",
+            data:{},
+				success:function(da){
+                    for(let i=0;i<da.xvalues.length;i++){
+                        
+                        xValues.push(da.xvalues[i])
+                        yValues.push(da.yvalues[i])
+                    }
+                    new Chart("myChart", {
+                    type: "line",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: yValues
+                        }]
+                    },
+                    options: {
+                        legend: {display: false},
+                        scales: {
+                        yAxes: [{ticks: {min:0}}],
+                        }
+                    }
+                    });
+                    
+				}
+			});
+          
+
+
+        
+        }
+        </script>
+</head>
+
+<body style="background-image: url(static/img/diagoona-bg-1.jpg);">
+    <div class="tm-container">        
+        <div>
+            <div class="tm-row pt-4">
+                <div class="tm-col-left">
+                    <div class="tm-site-header media">
+                        <i class="fas fa-umbrella-beach fa-3x mt-1 tm-logo"></i>
+                        <div class="media-body">
+                            <h1 class="tm-sitename text-uppercase">Weather Monitoring System</h1>
+                            <p class="tm-slogon">Humidity Analysis</p>
+                        </div>        
+                    </div>
+                </div>
+              
+            </div>
+            <h5 >X-axis : <label style="color: red;">Time</label></h5>
+            <h5 >Y-axis : <label style="color: blue;">Humidity</label></h5>
+            <div>
+            <canvas id="myChart" style="width: 100%;height: 300px;background-color: rgb(253, 237, 237);"></canvas>
+        </div>
+        </div>
+            
+
+             
+
+        <div class="tm-bg">
+            <div class="tm-bg-left"></div>
+            <div class="tm-bg-right"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <script src="{% static 'js/templatemo-script.js' %}"></script>
+</body>
+</html>

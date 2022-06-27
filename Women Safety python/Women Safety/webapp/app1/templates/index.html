@@ -1,0 +1,176 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fall detection System</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
+    <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <link href="{% static 'css/templatemo-diagoona.css' %}" rel="stylesheet" />
+<!--
+
+TemplateMo 550 Diagoona
+
+https://templatemo.com/tm-550-diagoona
+
+-->
+</head>
+<style>
+    .dropbtn {
+      background-color: #04AA6D;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+    }
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f1f1f1;
+      min-width: 260px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown-content a:hover {background-color: #ddd;}
+    
+    .dropdown:hover .dropdown-content {display: block;}
+    
+    .dropdown:hover .dropbtn {background-color: #3e8e41;}
+    .button {
+  background-color: #ffffff; /* Green */
+  border: none;
+  color: rgb(14, 13, 13);
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+    </style>
+    <script src="{% static  'jquery-2.1.4.min.js' %}"></script>
+    <script>
+function checklabel() 
+{
+    var fdata=document.getElementById("blinkid").innerHTML
+    console.log("data==>"+fdata)
+    if(fdata=="Fall Down"){
+        window.setInterval(function(){
+  $('.blink').toggle();
+  document.getElementById("blinkid").style.color = "#ff0000";
+}, 250);
+    }
+}
+
+// window.setInterval(function(){
+
+   
+//   $('.blink').toggle();
+// }, 250);
+        $(document).ready(function() {
+
+        $("#varbtn").click(function(){
+            window.location.href="http://127.0.0.1:8000/"
+            
+        }); 
+    });
+    </script>
+<body style="background-image: url(static/img/fall2.jpg);background-size: 1200px 600px;" onload="checklabel()">
+    <div class="tm-container">        
+        <div>
+            <div class="tm-row pt-4">
+                <div class="tm-col-left">
+                    <div class="tm-site-header media">
+                        <div class="media-body">
+                            <h1 class="tm-sitename text-uppercase">Fall detection System</h1>
+                            <!-- <p class="tm-slogon">Know your Weather</p> -->
+                        </div>        
+                    </div>
+                </div>
+                <div class="tm-col-right">
+                    <nav class="navbar navbar-expand-lg" id="tm-main-nav">
+                        <button class="navbar-toggler toggler-example mr-0 ml-auto" type="button" 
+                            data-toggle="collapse" data-target="#navbar-nav" 
+                            aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span><i class="fas fa-bars"></i></span>
+                        </button>
+                        <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
+                            <ul class="navbar-nav text-uppercase">
+                                <li class="nav-item ">
+                                    <a class="nav-link tm-nav-link" style="font-size: 15px;" href="#">Home <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    
+                                    <div class="dropdown" style="width:auto;" >
+                                        <a class="nav-link tm-nav-link" href="" style="font-size: 15px;">Plot<span class="sr-only">(current)</span></a>
+                                        <div class="dropdown-content" style="margin-top: -30px;">
+                                          <a href="{% url 'temeratureplt' %}" style="font-size: 14px;">Temperature</a>
+                                          <a href="{% url 'atmplt' %}" style="font-size: 14px;">Heart rate</a>
+                                        </div>
+                                      </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link tm-nav-link" href="#" style="font-size: 15px;height: 50px;width: 230px;">Fall Status : <label class="blink" id="blinkid" style="color: rgb(208, 255, 1);font-weight: bold;font-size: 15px;">{{fll}}</label> </a>
+                                </li>                            
+                               
+                            </ul>                            
+                        </div>                        
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="tm-row" style="margin-top: -50px;">
+                <div class="tm-col-left"></div>
+                <main class="tm-col-right">
+                    <section class="tm-content">
+                        <button class="button" id="varbtn">Get Sensor Values</button>
+                        
+                        <h4 class="mb-5" style="font-size: 14px;margin-top: 20px;margin-left: 10px;">TEMPERATURE VALUE : <label style="color: #88ff00;">{{temp}}</label> °C</h4>
+                        <h4 class="mb-5" style="font-size: 14px;margin-left: 10px;margin-top: -20px;">HEART RATE VALUE : <label style="color: #88ff00;">{{hum}}</label> BPM</h4>
+                        <!-- <h4 class="mb-5">AIR QUALITY VALUE : <label>{{airq}}</label> ppm <label style="font-size: 17px;color: tomato;">({{airqstatus}})</label></h4>
+                        <h4 class="mb-5">ATMOSPHERIC PRESSURE : <label>{{atm}}</label> pa</h4>
+                        <h4 class="mb-5">UV INDEX : <label>{{uvi}}</label><label style="font-size: 17px;color: tomato;">({{uvistatus}})</label></h4>
+                        <h4 class="mb-5">RAIN STATUS : <label>{{rainstatus}}</label></h4> -->
+                       
+                    </section>
+                </main>
+            </div>
+        </div>        
+
+
+        <div class="tm-bg">
+            <div class="tm-bg-left"></div>
+            <div class="tm-bg-right"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <script src="{% static 'js/templatemo-script.js' %}"></script>
+</body>
+</html>
